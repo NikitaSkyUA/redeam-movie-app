@@ -56,7 +56,7 @@
             <movie-list-item v-bind:movie="movie"/>
           </li>
         </ul>
-        <div class="pagination">
+        <div v-if="moviesToShow.length > 9" class="pagination">
           <span v-if="currentPage > 1" v-on:click="currentPage--"> - </span>
           <input type="text" v-model="currentPage">
           <span v-if="currentPage < (moviesToShow.length / 10) - 1" v-on:click="currentPage++"> + </span>
@@ -94,6 +94,7 @@ export default {
     paginatedMovies() {
       const startIndex = Number(this.currentPage + '0')
       return this.moviesToShow.filter((_, index) => {
+        if(this.moviesToShow.length < 10) return true
         if (startIndex <= 1) return index < 10
         if (startIndex < this.moviesToShow.length) return index >= startIndex && index < startIndex + 10
       })
